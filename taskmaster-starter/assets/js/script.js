@@ -45,7 +45,56 @@ var saveTasks = function() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
+$(".list-group").on("click", "p", function(){
 
+  $(".list-group").on("blur", "textarea", function(){
+    //get textareas current value/text
+    var text=$(this)
+      .var()
+      .trim();
+
+      //get parent ul's id attribute
+    var status = $(this)
+      .closet(".list-group")
+      .attr("id")
+      .replace("list-", "");
+
+      //get the tracks position in the list of other li elements
+    var index = $(this)
+      .closest(".list-group-item")
+      .index();
+      //tasks is an object. tasks[status] returns an array (e.g., toDo). 
+      //tasks[status][index] returns the object at the given index in the array.
+      //tasks[status][index].text returns the text property of the object 
+      //at the given index.
+
+    tasks[status][index].text=text;
+
+    saveTasks();
+
+    // recreate p element
+    var taskP = $("<p>")
+      .addClass("m-1")
+      .text(text);
+
+    // replace textarea with p element
+    $(this).replaceWith(taskP);
+        
+  });
+  
+  var text = $(this)
+    .text()
+    .trim();
+
+    var textInput = $("<textarea>")
+      .addClass("form-control")
+      .val(text);
+
+      $(this).replaceWith(textInput);
+
+        textInput.trigger("focus");
+    
+});
 
 
 // modal was triggered
