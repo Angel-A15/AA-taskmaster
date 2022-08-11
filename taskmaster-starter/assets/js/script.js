@@ -76,6 +76,7 @@ $(".list-group").on("click", "p", function(){
     var taskP = $("<p>")
       .addClass("m-1")
       .text(text);
+      
 
     // replace textarea with p element
     $(this).replaceWith(taskP);
