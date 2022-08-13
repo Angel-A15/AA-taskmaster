@@ -147,25 +147,25 @@ loadTasks();
 //due date was clicked: will let us edit the due date
 $(".list-group").on("click", "span", function(){
   //get current text
-  var date = $(this)
-    .text()
-    .trim();
+  var date = $(this).text().trim();
 
     //create new input element
-  var dateInput = $("<input>")
-    .attr("type", "text")
-    .addClass("form-control")
-    .val(date);
+  var dateInput = $("<input>").attr("type", "text").addClass("form-control").val(date);
 
     //swap out elemetns
   $(this).replaceWith(dateInput);
 
-    //automatically focus on new element
+    //enable jquerry ui datepicker
+  dateInput.datepicker({
+    minDate: 1
+  });
+
+  //automatically bring up the calendar
   dateInput.trigger("focus");
 });
 
 // value of due date was changed: will revert due date text back to orginal state
-$(".list-group").on("blur", "input[type='text']", function() {
+$(".list-group").on("change", "input[type='text']", function() {
   // get current text
   var date = $(this)
     .val()
@@ -258,18 +258,21 @@ $(".card .list-group").sortable({
       });
 
     });
-  }
+
+    // trim down list's ID to match object property
+    var arrName = $(this)
+      .attr("id")
+      .replace("list-", "");
+
+    // update array on tasks object and save
+    tasks[arrName] = tempArr;
+    saveTasks();
+  },
+
 });
 
 
-// trim down list's ID to match object property
-var arrName = $(this)
-  .attr("id")
-  .replace("list-", "");
 
-// update array on tasks object and save
-tasks[arrName] = tempArr;
-saveTasks();
 
 //adds ability to drop objects to delete
 $("#trash").droppable({
@@ -288,4 +291,9 @@ $("#trash").droppable({
   }
 
   
+});
+
+//added a calender to pick dates from 
+$("#modalDueDate").datepicker({
+  minDate: 1
 });
