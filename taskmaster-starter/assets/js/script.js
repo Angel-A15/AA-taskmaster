@@ -333,3 +333,12 @@ var auditTask = function(taskEl) {
     }
 
 };
+
+//adding timers 
+setInterval(function() {
+  
+  $(".card .list-group-item").each(function(index, el) {
+    auditTask(el);
+  });
+
+}, 5000);
