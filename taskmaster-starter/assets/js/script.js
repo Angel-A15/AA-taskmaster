@@ -158,11 +158,17 @@ $(".list-group").on("click", "span", function(){
     //enable jquerry ui datepicker
   dateInput.datepicker({
     minDate: 1
+
+    onClose: function() {
+      //when calendar is closed, force a "change" event on the 'dateInput'
+      $(this).trigger("change");
+    }
   });
 
   //automatically bring up the calendar
   dateInput.trigger("focus");
 });
+
 
 // value of due date was changed: will revert due date text back to orginal state
 $(".list-group").on("change", "input[type='text']", function() {
